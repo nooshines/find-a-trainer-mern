@@ -3,6 +3,7 @@ GeoJSON = require("geojson");
 const router = express.Router();
 const Trainer = require("../models/Trainer");
 const auth = require("../middleware/auth");
+const permission = require("../middleware/permission");
 const geocoder = require("../geocoder");
 
 //get a list of trainers
@@ -60,48 +61,58 @@ router.get("/trainer/profile", auth, async (req, res) => {
 });
 
 //new profile
-router.post("/trainers", auth, async (req, res) => {
-  const currentTrainer = await Trainer.findOne({ userId: req.user });
-  console.log("currenttrainer", currentTrainer);
-  if (currentTrainer && currentTrainer._id) {
-    res.status(404).send("Profile already existed");
-  } else {
-    console.log(req.body);
-    req.body.userId = req.user;
-    const geoCoderData = await geocoder.geocode(req.body.address);
-    console.log("geocoderdata", geoCoderData);
-    if (geoCoderData && geoCoderData.length) {
-      req.body.location = {
-        type: "Point",
-        coordinates: [geoCoderData[0].longitude, geoCoderData[0].latitude],
-      };
-      req.body.address = geoCoderData[0].formattedAddress;
-      const data = await Trainer.create(req.body).catch((err) => {
-        console.log(err);
-      });
-      res.send(data);
-    } else res.status(400).send("wrong address entered");
+router.post(
+  "/trainers",
+  auth,
+  permission("createOwn", "profile"),
+  async (req, res) => {
+    const currentTrainer = await Trainer.findOne({ userId: req.user });
+    console.log("currenttrainer", currentTrainer);
+    if (currentTrainer && currentTrainer._id) {
+      res.status(404).send("Profile already existed");
+    } else {
+      console.log(req.body);
+      req.body.userId = req.user;
+      const geoCoderData = await geocoder.geocode(req.body.address);
+      console.log("geocoderdata", geoCoderData);
+      if (geoCoderData && geoCoderData.length) {
+        req.body.location = {
+          type: "Point",
+          coordinates: [geoCoderData[0].longitude, geoCoderData[0].latitude],
+        };
+        req.body.address = geoCoderData[0].formattedAddress;
+        const data = await Trainer.create(req.body).catch((err) => {
+          console.log(err);
+        });
+        res.send(data);
+      } else res.status(400).send("wrong address entered");
+    }
   }
-});
+);
 
 //update  profile
 
-router.patch("/trainers/:id", auth, async (req, res) => {
-  console.log(req.body);
-  try {
-    const trainer = await Trainer.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user },
-      req.body,
-      {
-        new: true,
-      }
-    );
-    res.status(200).send(trainer);
-  } catch (error) {
-    res.status(400).send("bad request");
-    console.log(error);
+router.patch(
+  "/trainers/:id",
+  auth,
+  permission("updateOwn", "profile"),
+  async (req, res) => {
+    console.log(req.body);
+    try {
+      const trainer = await Trainer.findOneAndUpdate(
+        { _id: req.params.id, userId: req.user },
+        req.body,
+        {
+          new: true,
+        }
+      );
+      res.status(200).send(trainer);
+    } catch (error) {
+      res.status(400).send("bad request");
+      console.log(error);
+    }
   }
-});
+);
 
 //delete profile
 

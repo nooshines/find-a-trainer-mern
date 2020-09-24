@@ -24,7 +24,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -37,6 +37,7 @@ router.post(
         name,
         email,
         password,
+        role: role || "basic",
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -52,7 +53,7 @@ router.post(
       };
 
       jwt.sign(
-        { id: user._id },
+        { id: user._id, role: user.role },
         process.env.JWT_SECRET,
         {
           expiresIn: "2h",
@@ -98,7 +99,7 @@ router.post(
       }
 
       jwt.sign(
-        { id: user._id },
+        { id: user._id, role: user.role },
         process.env.JWT_SECRET,
         {
           expiresIn: "1h",

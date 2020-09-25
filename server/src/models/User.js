@@ -21,6 +21,9 @@ const schema = new mongoose.Schema({
     enum: ["basic", "trainer"],
     required: true,
   },
+  avatar: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", schema);

@@ -19,7 +19,7 @@ router.post("/findtrainers", async (req, res) => {
         location: {
           $near: {
             // distance in meters from lng and lat values
-            $maxDistance: req.body.distance ? req.body.distance : 20000,
+            $maxDistance: req.body.distance ? req.body.distance : 2000,
             $geometry: {
               type: "Point",
               // Put the actual lng and lat values
@@ -41,13 +41,13 @@ router.post("/findtrainers", async (req, res) => {
 });
 
 //get all trainers
-router.get("/", async (req, res) => {
+router.get("/alltrainers", async (req, res) => {
   const data = await Trainer.find({});
   res.send(data);
 });
 
 //get trainer by id
-router.get("/trainers/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const data = await Trainer.findOne({ _id: req.params.id });
   res.send(data);
 });
@@ -55,14 +55,19 @@ router.get("/trainers/:id", async (req, res) => {
 //authed routes
 
 //get trainer profile
-router.get("/trainer/profile", auth, async (req, res) => {
-  const data = await Trainer.findOne({ userId: req.user });
-  res.send(data);
-});
+router.get(
+  "/trainer/profile",
+  auth,
+  permission("readOwn", "profile"),
+  async (req, res) => {
+    const data = await Trainer.findOne({ userId: req.user });
+    res.send(data);
+  }
+);
 
 //new profile
 router.post(
-  "/trainers",
+  "/newprofile",
   auth,
   permission("createOwn", "profile"),
   async (req, res) => {
@@ -93,7 +98,7 @@ router.post(
 //update  profile
 
 router.patch(
-  "/trainers/:id",
+  "/updateprofile/:id",
   auth,
   permission("updateOwn", "profile"),
   async (req, res) => {
@@ -116,18 +121,23 @@ router.patch(
 
 //delete profile
 
-router.delete("/trainers/:id", auth, async (req, res) => {
-  console.log("deleteroute", req.user);
-  console.log("deleteroute", req.params.id);
-  try {
-    const trainer = await Trainer.findOneAndDelete({
-      _id: req.params.id,
-      userId: req.user,
-    });
-    res.status(200).send("Profile successfully deleted");
-  } catch (error) {
-    res.status(400).send("bad request");
-    console.log(error);
+router.delete(
+  "/deleteprofile/:id",
+  auth,
+  permission("deleteOwn", "profile"),
+  async (req, res) => {
+    console.log("deleteroute", req.user);
+    console.log("deleteroute", req.params.id);
+    try {
+      const trainer = await Trainer.findOneAndDelete({
+        _id: req.params.id,
+        userId: req.user,
+      });
+      res.status(200).send("Profile successfully deleted");
+    } catch (error) {
+      res.status(400).send("bad request");
+      console.log(error);
+    }
   }
-});
+);
 module.exports = router;

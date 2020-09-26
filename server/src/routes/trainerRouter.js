@@ -2,6 +2,7 @@ const express = require("express");
 GeoJSON = require("geojson");
 const router = express.Router();
 const Trainer = require("../models/Trainer");
+const Review = require("../models/Review");
 const auth = require("../middleware/auth");
 const permission = require("../middleware/permission");
 const geocoder = require("../geocoder");
@@ -37,6 +38,20 @@ router.post("/findtrainers", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send("server error");
+  }
+});
+
+//get all the reviews
+router.get("/allreviews/:profileId", auth, async (req, res) => {
+  try {
+    if (req.userRole === "trainer") {
+      const allReviews = await Review.find({ profileId: req.params.profileId });
+      res.status(200).send(allReviews);
+    } else {
+      res.status(404).send("cant find reviews");
+    }
+  } catch {
+    res.status(404).send("no reviews");
   }
 });
 

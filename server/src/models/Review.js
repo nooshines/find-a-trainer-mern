@@ -16,6 +16,10 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  profileId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Trainer",
+  },
 });
 
 module.exports = mongoose.model("Review", schema);

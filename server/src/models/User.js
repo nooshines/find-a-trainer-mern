@@ -24,6 +24,12 @@ const schema = new mongoose.Schema({
   avatar: {
     type: String,
   },
+  // review: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Review",
+  //   },
+  // ],
 });
 
 module.exports = mongoose.model("User", schema);

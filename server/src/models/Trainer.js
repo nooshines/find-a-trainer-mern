@@ -38,6 +38,12 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  // review: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Review",
+  //   },
+  // ],
 });
 
 module.exports = mongoose.model("Trainer", schema);

@@ -1,4 +1,5 @@
 Project Overview
+
 the aim of this project was to create an app to connenct personal trainers to clients. users can search for personal trainers around the area that they are searching for .
 if user is a personal trainer can register as a trainer and create a profile .
 also has the option of editing or deleting the profile .
@@ -7,6 +8,7 @@ if a user is not a personal trainer can register as a normal user and then have 
 TECHNOLOGIES & RESOURCES USED
 this is a full stack MERN Application (Mongo DB, Express, React js, Node js)
 using Contex API, Hooks, Reducers .
+accesscontrol
 bcryptjs
 cors
 geojson

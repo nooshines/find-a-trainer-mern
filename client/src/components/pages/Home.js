@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext } from "react";
 import Search from "../pages/Search";
-import Map from "../pages/Map";
+import LeafletMap from "./LeafletMap";
 import Results from "../pages/Results";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
 
@@ -11,8 +11,8 @@ const Home = () => {
   return (
     <Fragment>
       <Search />
-      <Map />
-      {SearchResults ? <Results /> : <div>No Result</div>}
+      <LeafletMap />
+      {SearchResults ? <Results /> : <div></div>}
     </Fragment>
   );
 };

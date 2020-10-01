@@ -57,7 +57,7 @@ const TrainerContextProvider = ({ children }) => {
   };
 
   //get trainer profile ** /trainer/trainer/profile
-  const getTrainerProfile = async (id) => {
+  const getTrainerProfile = async () => {
     try {
       const res = await axios.get("/trainer/trainer/profile");
       return res.data;

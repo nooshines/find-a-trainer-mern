@@ -30,31 +30,33 @@ const Search = () => {
   return (
     <Fragment>
       <div className="search">
-        <h4>Are you looking for a personal trainer?</h4>
-        <p>
-          if you are looking for a personal trainer near you, just type in a
-          location and find personal trainers around your location{" "}
-        </p>
-        <form className="form" onSubmit={onSubmit}>
-          <div className="form-group">
+        <h1>
+          Find A <span className="search-titile">Personal Trainer</span> Near
+          You
+        </h1>
+        <form onSubmit={onSubmit}>
+          <div className="form-box">
             <input
+              className="search-field location"
               type="text"
               name="location"
               placeholder="enter a location"
               value={location}
               onChange={onChange}
             />
-          </div>
-          <div className="form-group">
+
             <input
+              className="search-field distance"
               type="text"
               name="distance"
               placeholder="distance"
               value={distance}
               onChange={onChange}
             />
+            <button type="submit" className="search-btn">
+              <span className="search-btn-titile">Search</span>
+            </button>
           </div>
-          <input type="submit" className="btn btn-primary my-1" />
         </form>
       </div>
     </Fragment>

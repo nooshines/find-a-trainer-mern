@@ -32,8 +32,57 @@ body {
   text-align: center;
 }
 
+.search-field {
+  height: 50px;
+  padding: 10px;
+
+  outline: none;
+}
+.location {
+  width: 400px;
+  margin: 5px;
+}
+.distance {
+  width: 200px;
+  margin: 5px;
+}
+.search-btn {
+  height: 50px;
+  width: 150px;
+  background: var(--primary-color);
+  border: none;
+  margin: 5px;
+}
+.form-box {
+  margin-top: 30px;
+}
+
+.search-titile {
+  color: var(--primary-color);
+}
+.search-btn-titile {
+  color: white;
+}
+
+.imageUrl {
+  width: 270px;
+  height: 300px;
+}
+
+.primary-color-test {
+  color: var(--primary-color);
+}
+
 #mapid {
   height: 180px;
+}
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  background-color: lightgrey;
+  height: 80vh;
+  align-items: center;
+  align-content: center;
 }
 
 a {
@@ -359,7 +408,29 @@ button {
   .mainContainer {
     margin-top: 10rem;
   }
+  .search-field {
+    height: 50px;
+    padding: 5px;
+  }
+  .location {
+    width: 200px;
+    margin: 3px;
+  }
+  .distance {
+    width: 200px;
+    margin: 3px;
+  }
+  .search-btn {
+    height: 50px;
+    width: 75px;
 
+    margin: 3px;
+  }
+
+  .imageUrl {
+    width: 200px;
+    height: 300px;
+  }
   .hide-sm {
     display: none;
   }

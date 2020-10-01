@@ -21,6 +21,11 @@ const Search = () => {
     const result = await searchTrainer(location, distance);
     console.log("result", result);
     setSearchResults([result]);
+
+    // if(result){
+    //   <Results />
+    // }
+
     setFormData({
       location: "",
       distance: "",
@@ -49,7 +54,7 @@ const Search = () => {
               className="search-field distance"
               type="text"
               name="distance"
-              placeholder="distance"
+              placeholder="distance(meters)"
               value={distance}
               onChange={onChange}
             />

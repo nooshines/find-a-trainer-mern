@@ -1,11 +1,8 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
-import AuthContext from "../../context/auth/authContext";
 
 const Profile = (props) => {
   const { getTrainerProfile } = useContext(TrainerContext);
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
   const [profile, setProfile] = useState({});
 
   useEffect(() => {
@@ -22,8 +19,6 @@ const Profile = (props) => {
     console.log("res", res);
     setProfile(res);
   };
-
-  console.log("user in profile", user);
 
   return (
     <Fragment>

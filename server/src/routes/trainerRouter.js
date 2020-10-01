@@ -6,6 +6,10 @@ const Review = require("../models/Review");
 const auth = require("../middleware/auth");
 const permission = require("../middleware/permission");
 const geocoder = require("../geocoder");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const fs = require("fs");
+const path = require("path");
 
 //get a list of trainers
 //Search for trainers that are near that lng and lat
@@ -85,13 +89,19 @@ router.post(
   "/newprofile",
   auth,
   permission("createOwn", "profile"),
+  upload.single("avatar"),
   async (req, res) => {
     const currentTrainer = await Trainer.findOne({ userId: req.user });
-    console.log("currenttrainer", currentTrainer);
     if (currentTrainer && currentTrainer._id) {
       res.status(404).send("Profile already existed");
     } else {
-      console.log(req.body);
+      fs.rename(
+        path.join(__dirname, "../", "../", "uploads/", req.file.filename),
+        path.join(__dirname, "../", "../", "uploads/", req.file.originalname),
+        (e) => {
+          console.log(e);
+        }
+      );
       req.body.userId = req.user;
       const geoCoderData = await geocoder.geocode(req.body.address);
       console.log("geocoderdata", geoCoderData);
@@ -101,6 +111,7 @@ router.post(
           coordinates: [geoCoderData[0].longitude, geoCoderData[0].latitude],
         };
         req.body.address = geoCoderData[0].formattedAddress;
+        req.body.imageUrl = req.file.originalname;
         const data = await Trainer.create(req.body).catch((err) => {
           console.log(err);
         });

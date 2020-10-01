@@ -12,7 +12,9 @@ const Register = (props) => {
   const { register, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && role === "trainer") {
+      props.history.push("/newprofile");
+    } else if (isAuthenticated) {
       props.history.push("/home");
     }
     if (error === "User already exists") {
@@ -32,13 +34,11 @@ const Register = (props) => {
   const { name, email, password, password2, role } = user;
 
   const onChange = (e) => {
-    console.log(e.target.value);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("user", user);
     if (name === "" || email === "" || password === "") {
       setAlert("please enter all fields", "danger");
     } else if (password !== password2) {
@@ -100,7 +100,7 @@ const Register = (props) => {
           />
         </div>
         <div className="form-group">
-          <h5>* I am </h5>
+          <h5>I am </h5>
           <input
             type="radio"
             name="role"

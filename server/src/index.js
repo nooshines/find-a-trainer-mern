@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const Trainer = require("./models/Trainer");
 const upload = multer({ dest: "uploads/" });
+const auth = require("./middleware/auth");
 
 require("./mongo");
 
@@ -35,31 +36,38 @@ app.use("/blog", blogRouter);
 app.use("/review", reviewRouter);
 
 //file upload
-app.post("/fileupload", upload.single("avatar"), async (req, res) => {
-  console.log(req.file);
-  console.log(__dirname);
-  fs.rename(
-    path.join(__dirname, "../", "uploads/", req.file.filename),
-    path.join(__dirname, "../", "uploads/", req.file.originalname),
-    (e) => {
-      console.log(e);
-    }
-  );
-  const profile = await Trainer.findOne({ userId: req.user });
-  profile.imageUrl = req.file.originalname;
-  await profile.save();
-  console.log(profile);
-  res.send(profile);
-});
-//get
-app.get("/getfile", (req, res) => {
-  Trainer.find({}, (err, img) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send("app", { img: img });
-    }
-  });
+// app.post("/fileupload", auth, upload.single("avatar"), async (req, res) => {
+//   try {
+//     console.log(req.file);
+//     console.log(__dirname);
+//     fs.rename(
+//       path.join(__dirname, "../", "uploads/", req.file.filename),
+//       path.join(__dirname, "../", "uploads/", req.file.originalname),
+//       (e) => {
+//         console.log(e);
+//       }
+//     );
+//     const profile = await Trainer.findOne({ userId: req.user });
+//     profile.imageUrl = req.file.originalname;
+//     await profile.save();
+//     console.log(profile);
+//     res.send(profile);
+//   } catch (e) {
+//     res.send(e);
+//     console.log(e);
+//   }
+// });
+
+//get file
+app.get("/getfile", auth, async (req, res) => {
+  try {
+    const trainer = await Trainer.findOne({ userId: req.user });
+    console.log(trainer.imageUrl);
+    res.sendFile(trainer.imageUrl, { root: "./uploads" });
+  } catch (e) {
+    res.send(e);
+    console.log(e);
+  }
 });
 
 app.listen(port, () => {

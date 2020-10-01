@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useContext } from "react";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
 
-const Profile = (props) => {
-  const {} = useContext(TrainerContext);
+const Map = () => {
+  const { SearchResults } = useContext(TrainerContext);
 
-  return <div>Profile</div>;
+  return <div></div>;
 };
 
-export default Profile;
+export default Map;

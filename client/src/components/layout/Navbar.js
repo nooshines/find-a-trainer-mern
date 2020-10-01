@@ -7,8 +7,6 @@ const Navbar = () => {
 
   const { isAuthenticated, logout, user, loadUser } = authContext;
 
-  console.log("user", user);
-
   useEffect(() => {
     loadUser();
   }, []);
@@ -46,11 +44,10 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-dark">
-      <h1>
-        <Link to="/">
-          <small>Find-a-personal-trainer</small>
-        </Link>
-      </h1>
+      <Link to="/">
+        <h3>Find-a-personal-trainer</h3>
+      </Link>
+
       <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
     </div>
   );

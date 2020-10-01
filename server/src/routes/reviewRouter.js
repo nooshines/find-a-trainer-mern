@@ -12,13 +12,6 @@ router.get("/allreviews", async (req, res) => {
   res.send(data);
 });
 
-//get all private
-router.get("/myreviews", auth, async (req, res) => {
-  // const data = await Review.find({});
-  const review = await Review.find({ userId: req.user });
-  res.send(review);
-});
-
 //create review
 router.post("/new", auth, async (req, res) => {
   req.body.userId = req.user; //ensure logged in user owns this

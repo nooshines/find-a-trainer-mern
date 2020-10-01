@@ -10,9 +10,11 @@ import Login from "./components/auth/Login";
 import Profile from "./components/pages/Profile";
 import Alerts from "./components/layout/Alerts";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import NewProfile from "./components/pages/NewProfile";
 
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
+import TrainerContextProvider from "./context/trainer/TrainerContext";
 
 import setAuthToken from "./components/utils/setAuthToken";
 
@@ -25,22 +27,25 @@ if (localStorage.token) {
 const App = () => (
   <AuthState>
     <AlertState>
-      <Router>
-        <Fragment>
-          <Navbar />
-          <Route exact path="/" component={Landing} />
-          <section className="container">
-            <Alerts />
-            <Switch>
-              <PrivateRoute exact path="/home" component={Home} />
-              <PrivateRoute exact path="/profile" component={Profile} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-            </Switch>
-          </section>
-        </Fragment>
-      </Router>
+      <TrainerContextProvider>
+        <Router>
+          <Fragment>
+            <Navbar />
+            <Route exact path="/" component={Landing} />
+            <section className="mainContainer">
+              <Alerts />
+              <Switch>
+                <PrivateRoute exact path="/home" component={Home} />
+                <PrivateRoute exact path="/profile" component={Profile} />
+                <Route exact path="/newprofile" component={NewProfile} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+              </Switch>
+            </section>
+          </Fragment>
+        </Router>
+      </TrainerContextProvider>
     </AlertState>
   </AuthState>
 );

@@ -17,6 +17,7 @@ import PublicProfile from "./components/pages/PublicProfile";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import TrainerContextProvider from "./context/trainer/TrainerContext";
+import ReviewContextProvider from "./context/review/ReviewContext";
 
 import setAuthToken from "./components/utils/setAuthToken";
 
@@ -30,33 +31,39 @@ const App = () => (
   <AuthState>
     <AlertState>
       <TrainerContextProvider>
-        <Router>
-          <Fragment>
-            <Navbar />
-            <Route exact path="/" component={Landing} />
-            <section className="mainContainer">
-              <Alerts />
-              <Switch>
-                <PrivateRoute exact path="/home" component={Home} />
-                <PrivateRoute exact path="/profile" component={Profile} />
-                <PrivateRoute
-                  exact
-                  path="/profile/:id"
-                  component={PublicProfile}
-                />
-                <PrivateRoute exact path="/newprofile" component={NewProfile} />
-                <PrivateRoute
-                  exact
-                  path="/editprofile"
-                  component={EditProfile}
-                />
-                <Route exact path="/about" component={About} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
-              </Switch>
-            </section>
-          </Fragment>
-        </Router>
+        <ReviewContextProvider>
+          <Router>
+            <Fragment>
+              <Navbar />
+              <Route exact path="/" component={Landing} />
+              <section className="mainContainer">
+                <Alerts />
+                <Switch>
+                  <PrivateRoute exact path="/home" component={Home} />
+                  <PrivateRoute exact path="/profile" component={Profile} />
+                  <PrivateRoute
+                    exact
+                    path="/profile/:id"
+                    component={PublicProfile}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/newprofile"
+                    component={NewProfile}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/editprofile"
+                    component={EditProfile}
+                  />
+                  <Route exact path="/about" component={About} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} />
+                </Switch>
+              </section>
+            </Fragment>
+          </Router>
+        </ReviewContextProvider>
       </TrainerContextProvider>
     </AlertState>
   </AuthState>

@@ -50,7 +50,7 @@ const TrainerContextProvider = ({ children }) => {
   //get trainer by id ** trainer/:id
   const getTrainerById = async (id) => {
     try {
-      const res = await axios.get(`/trainer/trainer${id}`);
+      const res = await axios.get(`/trainer/${id}`);
       return res.data;
     } catch (err) {
       console.log(err);
@@ -102,7 +102,7 @@ const TrainerContextProvider = ({ children }) => {
   const editTrainer = async (editFormData) => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     };
     try {

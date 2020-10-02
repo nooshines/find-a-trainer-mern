@@ -4,21 +4,28 @@ import styled from "styled-components";
 
 const CardWrapper = styled.div`
   border: 1px solid black;
-  background: #efefef;
+  /* background: #efefef; */
   text-align: center;
 `;
 
 const Image = styled.div`
   width: 50px;
-
   margin-left: 40px;
 
   img {
     margin-top: 20px;
     height: 150px;
     width: 150px;
-    border-radius: 100%100%;
-    border: 1px solid #efefef;
+    border-radius: 100%;
+    border: 2px solid #efefef;
+  }
+  @media (max-width: 1000px) {
+    margin-left: 45px;
+    img {
+      margin-top: 10px;
+      height: 90px;
+      width: 90px;
+    }
   }
 `;
 
@@ -38,8 +45,14 @@ const LinkWrapper = styled.div`
     border-radius: 4px;
     padding: 10px 50px;
     border: 1px solid #000;
-    width: 100%100%;
+    width: 100%;
     text-decoration: none;
+  }
+  @media (max-width: 1000px) {
+    a {
+      width: 30%;
+      font-size: 12px;
+    }
   }
 `;
 
@@ -54,7 +67,7 @@ const Result = ({ result }) => {
       </Name>
       <Address>{result.address}</Address>
       <LinkWrapper>
-        <Link>View Profile</Link>
+        <Link to={`/profile/${result._id}`}>View Profile</Link>
       </LinkWrapper>
     </CardWrapper>
   );

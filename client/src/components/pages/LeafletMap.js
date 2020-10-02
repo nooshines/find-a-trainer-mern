@@ -2,20 +2,28 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
 import L from "leaflet";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-// import userLocationURL from "./user_location.svg";
 
 const LeafletMap = () => {
-  const { SearchResults } = useContext(TrainerContext);
+  const { searchResults } = useContext(TrainerContext);
+  console.log("search results in map", searchResults);
+
+  let locations = [];
+  locations = searchResults.map((sr) => {
+    return { lat: sr.location.coordinates[1], lng: sr.location.coordinates[0] };
+  });
+
   const [state, setState] = useState({
-    lat: 51.505,
-    lng: -0.09,
+    lat: -33.87271,
+    lng: 151.207609,
     zoom: 13,
   });
 
-  // const myIcon = L.icon({
-  //   iconUrl: userLocationURL,
-  //   iconSize: [50, 82],
-  // });
+  const customMarker = new L.Icon({
+    iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
+    iconSize: [25, 41],
+    iconAnchor: [10, 41],
+    popupAnchor: [2, -40],
+  });
 
   const position = [state.lat, state.lng];
 
@@ -26,11 +34,15 @@ const LeafletMap = () => {
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        {locations.map((location, index) => {
+          return (
+            <Marker position={location} icon={customMarker} key={index}>
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          );
+        })}
       </Map>
     </Fragment>
   );

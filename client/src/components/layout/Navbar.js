@@ -1,9 +1,11 @@
 import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
+import { TrainerContext } from "../../context/trainer/TrainerContext";
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
+  const { setSearchResults } = useContext(TrainerContext);
 
   const { isAuthenticated, logout, user, loadUser } = authContext;
 
@@ -13,6 +15,7 @@ const Navbar = () => {
 
   const onLogout = () => {
     logout();
+    setSearchResults([]);
   };
 
   const authLinks = (

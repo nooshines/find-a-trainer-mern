@@ -31,6 +31,7 @@ const TrainerContextProvider = ({ children }) => {
         location,
         distance,
       });
+
       return res.data;
     } catch (err) {
       console.log(err);
@@ -100,7 +101,7 @@ const TrainerContextProvider = ({ children }) => {
   };
 
   //edit trainer
-  const editTrainer = async (editFormData, id) => {
+  const editTrainer = async (editFormData) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -108,8 +109,8 @@ const TrainerContextProvider = ({ children }) => {
     };
     try {
       const res = await axios.patch(
-        `/trainer/updateprofile/${id}`,
-        { editFormData },
+        "/trainer/updateprofile",
+        editFormData,
         config
       );
       return res;

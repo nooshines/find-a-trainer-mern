@@ -20,11 +20,7 @@ const Search = () => {
     console.log("submit");
     const result = await searchTrainer(location, distance);
     console.log("result", result);
-    setSearchResults([result]);
-
-    // if(result){
-    //   <Results />
-    // }
+    setSearchResults(result);
 
     setFormData({
       location: "",

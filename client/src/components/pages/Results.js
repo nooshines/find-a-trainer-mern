@@ -3,14 +3,15 @@ import { TrainerContext } from "../../context/trainer/TrainerContext";
 import Result from "./Result";
 
 const Results = () => {
-  const { SearchResults } = useContext(TrainerContext);
+  const { searchResults } = useContext(TrainerContext);
 
-  console.log("searchResults in results", SearchResults);
+  console.log("searchResults in results", searchResults);
   return (
     <Fragment>
-      {SearchResults &&
-        SearchResults.map((result) => {
-          return <Result result={result} key={result.id} />;
+      {searchResults.length &&
+        searchResults.map((result) => {
+          console.log("result", result);
+          return <Result result={result} key={result._id} />;
         })}
     </Fragment>
   );

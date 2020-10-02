@@ -91,6 +91,7 @@ router.post(
   permission("createOwn", "profile"),
   upload.single("avatar"),
   async (req, res) => {
+    console.log("bodyinpost", req.body);
     const currentTrainer = await Trainer.findOne({ userId: req.user });
     if (currentTrainer && currentTrainer._id) {
       res.status(404).send("Profile already existed");
@@ -124,14 +125,15 @@ router.post(
 //update  profile
 
 router.patch(
-  "/updateprofile/:id",
+  "/updateprofile",
   auth,
+  upload.single("avatar"),
   permission("updateOwn", "profile"),
   async (req, res) => {
-    console.log(req.body);
+    console.log("body", req.body);
     try {
       const trainer = await Trainer.findOneAndUpdate(
-        { _id: req.params.id, userId: req.user },
+        { userId: req.user },
         req.body,
         {
           new: true,

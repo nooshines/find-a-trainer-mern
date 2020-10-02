@@ -5,14 +5,14 @@ import Results from "../pages/Results";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
 
 const Home = () => {
-  const { SearchResults } = useContext(TrainerContext);
+  const { searchResults } = useContext(TrainerContext);
 
-  console.log("SearchResults in home", SearchResults);
+  console.log("SearchResults in home", searchResults);
   return (
     <Fragment>
       <Search />
       <LeafletMap />
-      {SearchResults ? <Results /> : <div></div>}
+      {searchResults.length ? <Results /> : <div></div>}
     </Fragment>
   );
 };

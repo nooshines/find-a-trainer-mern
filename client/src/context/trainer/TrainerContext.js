@@ -7,8 +7,6 @@ const TrainerContextProvider = ({ children }) => {
   const [trainers, setTrainers] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
 
-  console.log("searchResults in context", searchResults);
-
   useEffect(() => {
     getTrainers();
   }, []);

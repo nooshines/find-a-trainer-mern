@@ -7,7 +7,6 @@ import { TrainerContext } from "../../context/trainer/TrainerContext";
 const Home = () => {
   const { searchResults } = useContext(TrainerContext);
 
-  console.log("SearchResults in home", searchResults);
   return (
     <Fragment>
       <Search />

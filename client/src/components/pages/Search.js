@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useContext } from "react";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
-import Results from "../pages/Results";
 
 const Search = () => {
   const { searchTrainer, setSearchResults } = useContext(TrainerContext);

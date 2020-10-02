@@ -12,6 +12,7 @@ import Alerts from "./components/layout/Alerts";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import NewProfile from "./components/pages/NewProfile";
 import EditProfile from "./components/pages/EditProfile";
+import PublicProfile from "./components/pages/PublicProfile";
 
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
@@ -38,8 +39,17 @@ const App = () => (
               <Switch>
                 <PrivateRoute exact path="/home" component={Home} />
                 <PrivateRoute exact path="/profile" component={Profile} />
-                <Route exact path="/newprofile" component={NewProfile} />
-                <Route exact path="/editprofile" component={EditProfile} />
+                <PrivateRoute
+                  exact
+                  path="/profile/:id"
+                  component={PublicProfile}
+                />
+                <PrivateRoute exact path="/newprofile" component={NewProfile} />
+                <PrivateRoute
+                  exact
+                  path="/editprofile"
+                  component={EditProfile}
+                />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />

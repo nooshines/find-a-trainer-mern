@@ -5,7 +5,6 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 
 const LeafletMap = () => {
   const { searchResults } = useContext(TrainerContext);
-  console.log("search results in map", searchResults);
 
   let locations = [];
   locations = searchResults.map((sr) => {

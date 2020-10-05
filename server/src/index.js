@@ -20,7 +20,7 @@ const reviewRouter = require("./routes/reviewRouter");
 
 const isProd = process.env.NODE_ENV === "production";
 
-if (isprod) {
+if (isProd) {
   console.log("Express app running in production");
   app.use(express.static("./uploads"));
   app.use(express.static("./public"));
@@ -40,7 +40,7 @@ app.use("/trainer", trainerRouter);
 app.use("/blog", blogRouter);
 app.use("/review", reviewRouter);
 
-if (isprod) {
+if (isProd) {
   app.get("/*", (req, res) => {
     res.sendFile("./public/index.html", { root: "./" });
   });

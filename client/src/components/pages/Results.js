@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
 import Result from "./Result";
 import styled from "styled-components";
@@ -15,14 +15,39 @@ const Grid = styled.div`
 `;
 
 const Results = () => {
-  const { searchResults } = useContext(TrainerContext);
+  const { searchResults, setSearchResults } = useContext(TrainerContext);
+
+  useEffect(() => {
+    setSearchResults(null);
+  }, []);
+
+  const renderGrid = () => {
+    if (!searchResults) {
+      return <Fragment></Fragment>;
+    }
+    // if  <Grid>{grid}</Grid> : <h4>No Result</h4>
+    return searchResults.length > 0 ? (
+      searchResults.map((result) => {
+        return (
+          <Grid>
+            <Result key={result._id} result={result} />
+          </Grid>
+        );
+      })
+    ) : (
+      <h4>No Rsult</h4>
+    );
+  };
 
   console.log("searchResults in results", searchResults);
 
-  const grid = searchResults.map((result) => {
-    return <Result key={result._id} result={result} />;
-  });
-  return <Fragment>{grid ? <Grid>{grid}</Grid> : <h4>No Result</h4>}</Fragment>;
+  // const grid = searchResults
+  //   ? searchResults.map((result) => {
+  //       return <Result key={result._id} result={result} />;
+  //     })
+  //   : null;
+
+  return <Fragment>{renderGrid()}</Fragment>;
 };
 
 export default Results;

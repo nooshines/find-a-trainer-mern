@@ -1,10 +1,5 @@
 const express = require("express");
-const multer = require("multer");
-const fs = require("fs");
 const path = require("path");
-const Trainer = require("./models/Trainer");
-const upload = multer({ dest: "uploads/" });
-const auth = require("./middleware/auth");
 
 require("./mongo");
 
@@ -23,8 +18,18 @@ const trainerRouter = require("./routes/trainerRouter");
 const blogRouter = require("./routes/blogRouter");
 const reviewRouter = require("./routes/reviewRouter");
 
+const isProd = process.env.NODE_ENV === "production";
+
+if (isprod) {
+  console.log("Express app running in production");
+  app.use(express.static("./uploads"));
+  app.use(express.static("./public"));
+} else {
+  app.use(express.static(path.join(__dirname, "../", "uploads/")));
+}
+
 //static path
-app.use(express.static(path.join(__dirname, "../", "uploads/")));
+// app.use(express.static(path.join(__dirname, "../", "uploads/")));
 
 //middleware
 app.use(express.json()); //parse JSON body
@@ -35,40 +40,11 @@ app.use("/trainer", trainerRouter);
 app.use("/blog", blogRouter);
 app.use("/review", reviewRouter);
 
-//file upload
-// app.post("/fileupload", auth, upload.single("avatar"), async (req, res) => {
-//   try {
-//     console.log(req.file);
-//     console.log(__dirname);
-//     fs.rename(
-//       path.join(__dirname, "../", "uploads/", req.file.filename),
-//       path.join(__dirname, "../", "uploads/", req.file.originalname),
-//       (e) => {
-//         console.log(e);
-//       }
-//     );
-//     const profile = await Trainer.findOne({ userId: req.user });
-//     profile.imageUrl = req.file.originalname;
-//     await profile.save();
-//     console.log(profile);
-//     res.send(profile);
-//   } catch (e) {
-//     res.send(e);
-//     console.log(e);
-//   }
-// });
-
-//get file
-app.get("/getfile", auth, async (req, res) => {
-  try {
-    const trainer = await Trainer.findOne({ userId: req.user });
-    console.log(trainer.imageUrl);
-    res.sendFile(trainer.imageUrl, { root: "./uploads" });
-  } catch (e) {
-    res.send(e);
-    console.log(e);
-  }
-});
+if (isprod) {
+  app.get("/*", (req, res) => {
+    res.sendFile("./public/index.html", { root: "./" });
+  });
+}
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);

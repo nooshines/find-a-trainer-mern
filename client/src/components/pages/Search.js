@@ -18,9 +18,9 @@ const Search = () => {
     e.preventDefault();
     console.log("submit");
     const result = await searchTrainer(location, distance);
+
     console.log("result", result);
     setSearchResults(result);
-
     setFormData({
       location: "",
       distance: "",

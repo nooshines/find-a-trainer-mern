@@ -25,6 +25,7 @@ router.post("/new", auth, async (req, res) => {
       res.status(400).send("unable to create");
     } else {
       console.log("req.body", req.body);
+      console.log("user.name", user.name);
       const newReview = await Review.create(req.body);
       const reviews = await Review.find({ profileId: trainer._id });
       const scores = reviews.map((review) => {
@@ -42,6 +43,8 @@ router.post("/new", auth, async (req, res) => {
           avgRating: avg,
         }
       );
+      newReview.userName = user.name;
+      console.log("newReview", newReview);
       res.status(200).send(newReview);
     }
   } catch {

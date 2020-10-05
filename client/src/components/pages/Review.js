@@ -28,6 +28,11 @@ const Description = styled.div`
   font-size: 14px;
 `;
 
+const Small = styled.small`
+  display: block;
+  text-align: right;
+`;
+
 const Review = ({ trainerReview }) => {
   return (
     <Card>
@@ -36,6 +41,7 @@ const Review = ({ trainerReview }) => {
       </RatingContainer>
       <Title>{trainerReview.title}</Title>
       <Description>{trainerReview.description}</Description>
+      <Small>{trainerReview.userName}</Small>
     </Card>
   );
 };

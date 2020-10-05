@@ -1,5 +1,27 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
+import styled from "styled-components";
+
+const Image = styled.div`
+  img {
+    width: 250px;
+    height: 250px;
+  }
+`;
+
+const Edit = styled.div`
+  margin-bottom: 50px;
+  margin-top: 50px;
+  input {
+    font-size: 14px;
+    width: 150px;
+    height: 60px;
+    cursor: pointer;
+    background: #ed733f;
+    color: white;
+    border: none;
+  }
+`;
 
 const Profile = (props) => {
   const { getTrainerProfile } = useContext(TrainerContext);
@@ -22,23 +44,26 @@ const Profile = (props) => {
 
   return (
     <Fragment>
-      <div className="profile-page p-2">
-        <img src={profile.imageUrl} className="round-img my-1 imageUrl" />
-        <h2 className="primary-color-test">Name :</h2>
-        <h3>{profile.name}</h3>
-        <h2 className="primary-color-test">bio:</h2>
-        <h3>{profile.bio}</h3>
-        <h2 className="primary-color-test">certificate: </h2>
-        <h3>{profile.certificate}</h3>
-        <h2 className="primary-color-test">address:</h2>
-        <h3>{profile.address}</h3>
+      <h1 className="my-3">Welcome {profile.name}</h1>
+      <Image>
+        {" "}
+        <img src={profile.imageUrl} />{" "}
+      </Image>
+      <h2>Name :</h2>
+      <h4>{profile.name}</h4>
+      <h2>bio:</h2>
+      <h4>{profile.bio}</h4>
+      <h2>certificate: </h2>
+      <h4>{profile.certificate}</h4>
+      <h2>address:</h2>
+      <h4>{profile.address}</h4>
+      <Edit>
         <input
           type="submit"
-          className="btn btn-primary my-3"
-          value="   Edit   "
+          value="   Edit Profile    "
           onClick={onClickHandler}
         />
-      </div>
+      </Edit>
     </Fragment>
   );
 };

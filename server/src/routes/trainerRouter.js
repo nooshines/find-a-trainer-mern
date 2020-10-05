@@ -36,6 +36,7 @@ router.post("/findtrainers", async (req, res) => {
           },
         },
       });
+
       console.log(trainers);
       res.send(trainers);
     }
@@ -128,14 +129,16 @@ router.patch(
   async (req, res) => {
     console.log("body", req.body);
     try {
-      fs.rename(
-        path.join(__dirname, "../", "../", "uploads/", req.file.filename),
-        path.join(__dirname, "../", "../", "uploads/", req.file.originalname),
-        (e) => {
-          console.log(e);
-        }
-      );
-      req.body.imageUrl = req.file.originalname;
+      if (req.file) {
+        fs.rename(
+          path.join(__dirname, "../", "../", "uploads/", req.file.filename),
+          path.join(__dirname, "../", "../", "uploads/", req.file.originalname),
+          (e) => {
+            console.log(e);
+          }
+        );
+        req.body.imageUrl = req.file.originalname;
+      }
       const trainer = await Trainer.findOneAndUpdate(
         { userId: req.user },
         req.body,

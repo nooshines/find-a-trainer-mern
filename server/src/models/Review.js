@@ -12,6 +12,9 @@ const schema = new mongoose.Schema({
   score: {
     type: Number,
   },
+  userName: {
+    type: String,
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

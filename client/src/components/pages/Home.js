@@ -11,7 +11,7 @@ const Home = () => {
     <Fragment>
       <Search />
       <LeafletMap />
-      {searchResults.length ? <Results /> : <div></div>}
+      <Results />
     </Fragment>
   );
 };

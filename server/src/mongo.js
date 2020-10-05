@@ -1,16 +1,13 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-mongoose.connect(
-  `mongodb://${process.env.DB_HOST || "localhost"}/${
-    process.env.DB_NAME || "find_a_trainer"
-  }`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  }
-);
+const uri = process.env.MONGODB_URI || "mongodb://localhost/find_a_trainer";
+
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 
 const db = mongoose.connection;
 

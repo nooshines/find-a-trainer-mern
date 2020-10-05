@@ -7,9 +7,14 @@ const LeafletMap = () => {
   const { searchResults } = useContext(TrainerContext);
 
   let locations = [];
-  locations = searchResults.map((sr) => {
-    return { lat: sr.location.coordinates[1], lng: sr.location.coordinates[0] };
-  });
+  locations = searchResults
+    ? searchResults.map((sr) => {
+        return {
+          lat: sr.location.coordinates[1],
+          lng: sr.location.coordinates[0],
+        };
+      })
+    : [];
 
   const [state, setState] = useState({
     lat: -33.87271,

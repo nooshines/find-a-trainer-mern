@@ -5,7 +5,7 @@ export const TrainerContext = createContext();
 
 const TrainerContextProvider = ({ children }) => {
   const [trainers, setTrainers] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
 
   useEffect(() => {
     getTrainers();
@@ -29,7 +29,6 @@ const TrainerContextProvider = ({ children }) => {
         location,
         distance,
       });
-
       return res.data;
     } catch (err) {
       console.log(err);

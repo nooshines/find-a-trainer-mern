@@ -4,7 +4,7 @@ const path = require("path");
 require("./mongo");
 
 //env
-require("dotenv").config();
+// require("dotenv").config();
 
 //variables
 const port = process.env.EXPRESS_PORT || 3000;

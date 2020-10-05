@@ -14,7 +14,7 @@ const LeafletMap = () => {
   const [state, setState] = useState({
     lat: -33.87271,
     lng: 151.207609,
-    zoom: 13,
+    zoom: 10,
   });
 
   const customMarker = new L.Icon({
@@ -28,7 +28,12 @@ const LeafletMap = () => {
 
   return (
     <Fragment>
-      <Map center={position} zoom={state.zoom} id="mapid">
+      <Map
+        center={position}
+        zoom={state.zoom}
+        id="mapid"
+        style={{ zIndex: -1 }}
+      >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -36,9 +41,9 @@ const LeafletMap = () => {
         {locations.map((location, index) => {
           return (
             <Marker position={location} icon={customMarker} key={index}>
-              <Popup>
+              {/* <Popup>
                 A pretty CSS3 popup. <br /> Easily customizable.
-              </Popup>
+              </Popup> */}
             </Marker>
           );
         })}

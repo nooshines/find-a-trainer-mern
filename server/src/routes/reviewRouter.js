@@ -3,7 +3,6 @@ const Review = require("../models/Review");
 const User = require("../models/User");
 const Trainer = require("../models/Trainer");
 const auth = require("../middleware/auth");
-const { findOne } = require("../models/Review");
 const router = express.Router();
 
 //get all public
@@ -27,6 +26,22 @@ router.post("/new", auth, async (req, res) => {
     } else {
       console.log("req.body", req.body);
       const newReview = await Review.create(req.body);
+      const reviews = await Review.find({ profileId: trainer._id });
+      const scores = reviews.map((review) => {
+        return review.score;
+      });
+      const totalScore = scores.reduce((acc, score) => {
+        return score + acc;
+      }, 0);
+      const avg = parseInt(totalScore / scores.length);
+      await Trainer.findByIdAndUpdate(
+        {
+          _id: trainer._id,
+        },
+        {
+          avgRating: avg,
+        }
+      );
       res.status(200).send(newReview);
     }
   } catch {

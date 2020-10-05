@@ -3,11 +3,16 @@ import { useParams } from "react-router";
 import { TrainerContext } from "../../context/trainer/TrainerContext";
 import ReviewHeader from "../pages/ReviewHeader";
 import ReviewForm from "../pages/ReviewForm";
+import ReviewBody from "../pages/ReviewBody";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(1, 2fr);
+  }
 `;
 const Column = styled.div`
   background: #fff;
@@ -31,19 +36,15 @@ const PublicProfile = () => {
 
   useEffect(() => {
     currentTrainer();
-    currentTrainerReviews();
   }, []);
 
   const currentTrainer = async () => {
-    const res = await getTrainerById(id);
-    console.log("currentTrainer", res);
-    setTrainer(res);
-  };
-
-  const currentTrainerReviews = async () => {
-    const res = await getReviews(trainer._id);
-    console.log("currentTrainerReviews", res);
-    setTrainerReviews(res);
+    const trainer = await getTrainerById(id);
+    console.log("currentTrainer", trainer);
+    setTrainer(trainer);
+    const reviews = await getReviews(trainer._id);
+    console.log("currentTrainerReviews", reviews);
+    setTrainerReviews(reviews);
   };
 
   return (
@@ -51,8 +52,10 @@ const PublicProfile = () => {
       <Wrapper>
         <Column>
           <Main>
-            <ReviewHeader trainer={trainer} />
-            <div className="reviews"></div>
+            <ReviewHeader trainer={trainer} trainerReviews={trainerReviews} />
+            <div className="reviews">
+              <ReviewBody trainerReviews={trainerReviews} />
+            </div>
           </Main>
         </Column>
         <Column>

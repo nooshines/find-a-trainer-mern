@@ -61,12 +61,11 @@ const ReviewHeadline = styled.div`
 
 const ReviewForm = ({ profileId, name, setTrainerReviews, trainerReviews }) => {
   const { createReview } = useContext(ReviewContext);
-  const [scoreValue, setScoreValue] = useState(null);
 
   const [review, setReview] = useState({
     title: "",
     description: "",
-    score: scoreValue,
+    score: null,
     profileId,
   });
 
@@ -85,6 +84,7 @@ const ReviewForm = ({ profileId, name, setTrainerReviews, trainerReviews }) => {
       title: "",
       description: "",
       score: null,
+      profileId,
     });
   };
 
@@ -101,6 +101,7 @@ const ReviewForm = ({ profileId, name, setTrainerReviews, trainerReviews }) => {
             value={title}
             placeholder="Review Title"
             onChange={onChangeHandler}
+            required={true}
           />
         </Field>
         <Field>
@@ -110,11 +111,15 @@ const ReviewForm = ({ profileId, name, setTrainerReviews, trainerReviews }) => {
             value={description}
             placeholder="Review Description"
             onChange={onChangeHandler}
+            required={true}
           />
         </Field>
         <Field>
           <RatingContainer>
-            <StarRating setScoreValue={setScoreValue} />
+            <StarRating
+              setScoreValue={onChangeHandler}
+              scoreValue={review.score}
+            />
           </RatingContainer>
         </Field>
         <SubmitBtn>Submit Your Review</SubmitBtn>

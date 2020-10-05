@@ -57,6 +57,7 @@ const NewProfile = (props) => {
             name="certificate"
             value={certificate}
             onChange={onChange}
+            required={true}
           />
           <small className="form-text">please enter your Certificate</small>
         </div>
@@ -66,6 +67,7 @@ const NewProfile = (props) => {
             name="address"
             value={address}
             onChange={onChange}
+            required={true}
           />
           <small className="form-text">please enter your Address</small>
         </div>
@@ -77,6 +79,7 @@ const NewProfile = (props) => {
               className="custom-file-input"
               id="avatar"
               ref={file}
+              required={true}
             />
           </div>
           <small className="form-text text-muted">
@@ -85,7 +88,12 @@ const NewProfile = (props) => {
         </div>
 
         <div className="form-group">
-          <textarea name="bio" value={bio} onChange={onChange} />
+          <textarea
+            name="bio"
+            value={bio}
+            onChange={onChange}
+            required={true}
+          />
           <small className="form-text">Tell us a little about yourself</small>
         </div>
 

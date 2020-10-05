@@ -38,6 +38,7 @@ const schema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  avgRating: Number,
   // review: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,

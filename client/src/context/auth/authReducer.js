@@ -12,7 +12,7 @@ import {
 export default (state, action) => {
   switch (action.type) {
     case USER_LOADED:
-      localStorage.setItem("user", action.payload);
+      localStorage.setItem("user", action.payload.name);
       return {
         ...state,
         isAuthenticated: true,

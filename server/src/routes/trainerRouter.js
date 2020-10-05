@@ -48,12 +48,8 @@ router.post("/findtrainers", async (req, res) => {
 //get all the reviews
 router.get("/allreviews/:profileId", auth, async (req, res) => {
   try {
-    if (req.userRole === "trainer") {
-      const allReviews = await Review.find({ profileId: req.params.profileId });
-      res.status(200).send(allReviews);
-    } else {
-      res.status(404).send("cant find reviews");
-    }
+    const allReviews = await Review.find({ profileId: req.params.profileId });
+    res.status(200).send(allReviews);
   } catch {
     res.status(404).send("no reviews");
   }
@@ -132,6 +128,14 @@ router.patch(
   async (req, res) => {
     console.log("body", req.body);
     try {
+      fs.rename(
+        path.join(__dirname, "../", "../", "uploads/", req.file.filename),
+        path.join(__dirname, "../", "../", "uploads/", req.file.originalname),
+        (e) => {
+          console.log(e);
+        }
+      );
+      req.body.imageUrl = req.file.originalname;
       const trainer = await Trainer.findOneAndUpdate(
         { userId: req.user },
         req.body,

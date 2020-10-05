@@ -39,7 +39,7 @@ const TrainerContextProvider = ({ children }) => {
   //get all the reviews ** trainer/allreviews/:profileId
   const getReviews = async (profileId) => {
     try {
-      const res = await axios.get(`/trainer/allreviews${profileId}`);
+      const res = await axios.get(`/trainer/allreviews/${profileId}`);
       // setReviews(res.data);
       return res.data;
     } catch (err) {

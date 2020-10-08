@@ -26,7 +26,6 @@ if user is not a personal trainer can register as a normal user and then have th
 - axios
 - moment
 - react-router
-- react-beautiful-dnd
 - material ui
 - accesscontrol
 - geojson
